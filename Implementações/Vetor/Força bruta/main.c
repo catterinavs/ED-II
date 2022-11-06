@@ -2,6 +2,8 @@
 #define max 15
 #define pad 4
 
+//Não ta funcionando
+
 void buf(){
     setbuf (stdin, NULL);
 }
