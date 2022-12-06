@@ -10,13 +10,13 @@ void linha(){
 }
 
 void insertion_sort( int *v , int tam) {
-    int i, j, menor;
+    int i, j, aux;
     for ( i = 1; i < tam; i++ ) {
-        menor = v[i];
+        aux = v[i];
         for ( j = (i-1); j >=0; j-- ) {
-            if ( menor < v[j] ) {
+            if ( aux < v[j] ) {
                 v[j+1] = v[j];
-                v[j] = menor;
+                v[j] = aux;
             }
         }
     }
@@ -25,7 +25,6 @@ void insertion_sort( int *v , int tam) {
 void main(){
     int vet[TAM]={5, 9, 2, 10, 4, 8, 7, 6, 1, 3};
 
-    //insertion_sort(vet, TAM);
     insertion_sort(vet, TAM);
     imprime(vet);
     linha();

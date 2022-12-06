@@ -7,7 +7,7 @@ void l(){
 }
 
 void box (char* vet, int tam){
-    int i, j, box[256];
+    int i, j, box[256], k = 0;
     for(i=0; i<256; i++){
         box[i] = 0;
     }
@@ -17,7 +17,8 @@ void box (char* vet, int tam){
     l();
     for (i=0; i<256; i++){
         for(j=box[i]; j>0; j--){
-            printf("%c ", i);
+            vet[k] = i;
+            k++;
         }
     }
 }
@@ -28,5 +29,7 @@ void main(){
     scanf("%[^\n]", vet);
 
     box(vet, TAM);
-    
+    for(int i = 0; i<TAM; i++){
+        printf("%c ", vet[i]);
+    }
 }

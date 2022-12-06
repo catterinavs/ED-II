@@ -42,5 +42,8 @@ void heap_sort(int *vet, int tam){
 }
 
 void main (){
+    int vet[TAM] = {2,5,4,1,6,8,10,7,9,3};
 
+    heap_sort(vet, TAM);
+    imprime(vet);
 }
