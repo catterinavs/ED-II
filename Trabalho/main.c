@@ -14,7 +14,11 @@ typedef struct lista{
 }Lista;
 
 void linha (){
-    printf ("\n---------------------------------------------------------\n");
+    printf ("---------------------------------------------------------\n");
+}
+
+void digite(){
+    printf(">> ");
 }
 
 void buf(){
@@ -56,7 +60,7 @@ Lista* CriarEntrada(){
 
 //Adiciona a entrada na lista correta
 void AdicionaLista(Lista **l, Lista *n){
-    if (*l != NULL){
+    if (*l == NULL){
         *l = n;
     }
     else{
@@ -65,15 +69,35 @@ void AdicionaLista(Lista **l, Lista *n){
     }
 }
 
+void imprime(Lista **l){
+    for (Lista *p = (*l); p!=NULL; p = p->prox){
+        printf("%s\t", p->info.nome);
+        printf("%d\t", p->info.idade);
+        printf("%c\t", p->info.sexo);
+        for(int i = 0; i < 5; i++){
+            printf("%d ", p->info.musicas[i]);
+        }
+    linha();
+    }
+}
+
+
+
 void main(){
-    int opcao, w = 0;
+    int opcao, opcao2, w = 0;
     Lista *novo, *menorFem = criarLista(), *menorMas = criarLista(), *maiorFem = criarLista(), *maiorMas = criarLista();
     
-    linha();
-    while(w = 0){
+    FILE *arq;
+    arq = fopen("save.txt", "r");
+
+    while(w == 0){
+        linha();
         printf("Escolha uma opcao:\n");
         printf("1 - Pesquisa\n");
+        printf("2 - Imprimir\n");
+        linha();
 
+        digite();
         scanf("%d", &opcao);
 
         switch (opcao){
@@ -94,7 +118,42 @@ void main(){
             }
             break;
         
+        case 2:
+            linha();
+            printf("Digite qual lista imprimir:\n");
+            printf("1 - Feminino/<=20\n");
+            printf("2 - Masculino/<=20\n");
+            printf("3 - Feminino/>20\n");            
+            printf("4 - Masculino/>20\n");
+            
+            digite();
+            scanf("%d", &opcao2);
+
+            switch (opcao2){
+            case 1:
+                imprime(&menorFem);
+                break;
+
+            case 2:
+                imprime(&menorMas);
+                break;
+
+            case 3:
+                imprime(&maiorFem);
+                break;
+
+            case 4:
+                imprime(&maiorMas);
+                break;
+            
+            default:
+                printf("Entrada invalida!!!!");
+                break;
+            }
+            break;
+       
         default:
+            w = 1;
             break;
         }
     }
