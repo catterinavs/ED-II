@@ -2,15 +2,16 @@
 O que já foi feito:
 - Lista da pesquisa
 - Vetor de 30 espaços para as músicas
-
-Próxima coisa
 - Shellsort nas listas
 - Listas das pessoas que ...(olhar no trab)
+
+Próxima coisa
 - Módulo para arquivo 
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX 30
 
@@ -130,7 +131,7 @@ void imprimeMusicas (ListaMusicas *lm){
     }
 }
 
-void shell_sort(ListaMusicas *vet, int tam){
+void shellSort(ListaMusicas *vet, int tam){
     int i, j, h = 1;
     ListaMusicas aux;
     
@@ -152,6 +153,24 @@ void shell_sort(ListaMusicas *vet, int tam){
     }
 }
 
+void gerarListaTop3 (Lista **l, ListaMusicas *lm, Lista **gerar){
+    Lista *p, *novo;
+    for(p = (*l); p!=NULL; p = p->prox){
+        if (p->info.musicas[0] == lm[0].id || p->info.musicas[0] == lm[1].id || p->info.musicas[0] == lm[2].id){
+            
+            novo = malloc(sizeof(Lista));
+            novo->prox = NULL;
+            strcpy(novo->info.nome, p->info.nome);
+            novo->info.idade = p->info.idade;
+            novo->info.sexo = p->info.sexo;
+            for(int i = 0; i < 5; i++){
+                novo->info.musicas[i] = p->info.musicas[i];
+            }
+            adicionaLista(gerar, novo);
+        }
+    }
+}
+
 void main(){
     int opcao, opcao2, w = 0;
     
@@ -169,7 +188,11 @@ void main(){
     *menorFem = criarLista(), 
     *menorMas = criarLista(), 
     *maiorFem = criarLista(), 
-    *maiorMas = criarLista();
+    *maiorMas = criarLista(),
+    *topMusicasMenorFem = criarLista(),
+    *topMusicasMenorMas = criarLista(),
+    *topMusicasMaiorFem = criarLista(),
+    *topMusicasMaiorMas = criarLista();
 
     while(w == 0){
 
@@ -178,6 +201,7 @@ void main(){
         printf("1 - Pesquisa\n");
         printf("2 - Imprimir Pesquisa\n");
         printf("3 - Imprimir votos das musicas\n");
+        printf("4 - Gerar lista das pessoas que escolheram na 1 opcao uma musica do top 3\n");
         linha();
 
         digite();
@@ -196,6 +220,7 @@ void main(){
                             musicasMenorFem[j].numVotos++;
                         }
                     }
+
                 }
             }
             else if (novo->info.idade <= 20 && novo->info.sexo == 'M'){
@@ -280,22 +305,22 @@ void main(){
 
             switch (opcao2){
                 case 1:
-                    shell_sort(musicasMenorFem, MAX);
+                    shellSort(musicasMenorFem, MAX);
                     imprimeMusicas(musicasMenorFem);
                     break;
 
                 case 2:
-                    shell_sort(musicasMenorMas, MAX);
+                    shellSort(musicasMenorMas, MAX);
                     imprimeMusicas(musicasMenorMas);
                     break;
 
                 case 3:
-                    shell_sort(musicasMaiorFem, MAX);
+                    shellSort(musicasMaiorFem, MAX);
                     imprimeMusicas(musicasMaiorFem);
                     break;
 
                 case 4:
-                    shell_sort(musicasMaiorMas, MAX);
+                    shellSort(musicasMaiorMas, MAX);
                     imprimeMusicas(musicasMaiorMas);
                     break;
                 
@@ -304,6 +329,49 @@ void main(){
                     break;
                 }
                 break;
+            break;
+
+        case 4:    
+            linha();
+            printf("Digite qual lista gerar:\n");
+            printf("1 - Feminino/<=20\n");
+            printf("2 - Masculino/<=20\n");
+            printf("3 - Feminino/>20\n");            
+            printf("4 - Masculino/>20\n");
+            
+            digite();
+            scanf("%d", &opcao2);
+            limpa();
+            
+            switch (opcao2){
+                case 1:
+                    shellSort(musicasMenorFem, MAX);
+                    gerarListaTop3(&menorFem, musicasMenorFem, &topMusicasMenorFem);
+                    imprime(&topMusicasMenorFem);
+                    break;
+
+                case 2:
+                    shellSort(musicasMenorMas, MAX);
+                    gerarListaTop3(&menorMas, musicasMenorMas, &topMusicasMenorMas);
+                    imprime(&topMusicasMenorMas);
+                    break;
+
+                case 3:
+                    shellSort(musicasMaiorFem, MAX);
+                    gerarListaTop3(&maiorFem, musicasMaiorFem, &topMusicasMaiorFem);
+                    imprime(&topMusicasMaiorFem);
+                    break;
+
+                case 4:
+                    shellSort(musicasMaiorMas, MAX);
+                    gerarListaTop3(&maiorMas, musicasMaiorMas, &topMusicasMaiorMas);
+                    imprime(&topMusicasMaiorMas);
+                    break;
+                
+                default:
+                    printf("Entrada invalida!!!!");
+                    break;
+                }
             break;
        
         default:
