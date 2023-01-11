@@ -30,7 +30,7 @@ void shell_sort(int *vet, int tam){
 }
 
 void main(){
-    int vet[TAM]={5, 9, 2, 10, 4, 8, 7, 6, 1, 3};
+    int vet[TAM]={5, 2, 2, 10, 4, 8, 7, 6, 1, 3};
 
     //insertion_sort(vet, TAM);
     shell_sort(vet, TAM);

@@ -130,6 +130,28 @@ void imprimeMusicas (ListaMusicas *lm){
     }
 }
 
+void shell_sort(ListaMusicas *vet, int tam){
+    int i, j, h = 1;
+    ListaMusicas aux;
+    
+    while(h < tam){
+        h = h*3+1;
+    }
+    while(h > 1){
+        h=(h-1)/3;
+        for (i = h; i < tam; i++){
+            aux = vet[i];
+            for(j = i-h; j>=0 && aux.numVotos > vet[j].numVotos; j=j-h){
+                vet[j+h] = vet[j];
+                
+            }
+            if (j != i-h){
+                vet[j] = aux;
+            }
+        }
+    }
+}
+
 void main(){
     int opcao, opcao2, w = 0;
     
@@ -175,6 +197,7 @@ void main(){
                         }
                     }
                 }
+                shell_sort(musicasMenorFem, MAX);
             }
             else if (novo->info.idade <= 20 && novo->info.sexo == 'M'){
                 adicionaLista(&menorMas, novo);
@@ -185,6 +208,7 @@ void main(){
                         }
                     }
                 }
+                shell_sort(musicasMenorMas, MAX);
             }
             else if (novo->info.idade > 20 && novo->info.sexo == 'F'){
                 adicionaLista(&maiorFem, novo);
@@ -195,6 +219,7 @@ void main(){
                         }
                     }
                 }
+                shell_sort(musicasMaiorFem, MAX);
             }
             else{
                 adicionaLista(&maiorMas, novo);
@@ -205,6 +230,7 @@ void main(){
                         }
                     }
                 }
+                shell_sort(musicasMaiorMas, MAX);
             }
             limpa();
             break;
