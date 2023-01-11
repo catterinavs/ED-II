@@ -1,12 +1,15 @@
 /*
 O que já foi feito:
-- Lista da pesquisa
-- Vetor de 30 espaços para as músicas
-- Shellsort nas listas
-- Listas das pessoas que ...(olhar no trab)
+- Lista da pesquisa;
+- Vetor de 30 espaços para as músicas;
+- Shellsort nas listas;
+- Listas das pessoas que ...(olhar no trab);
 
 Próxima coisa
-- Módulo para arquivo 
+- Módulo para arquivo 0;
+- Polir o programa{
+    - Colocar os limpa;
+}
 */
 
 #include <stdio.h>
@@ -118,6 +121,17 @@ void imprime(Lista **l){
     }
 }
 
+void LimpaLista (Lista **l){
+    Lista *p, *aux;
+    if (!estaVazia(l)){
+        for(p = *l; p!=NULL; p=aux){
+            aux = p->prox;
+            free(p);
+        }
+        *l = NULL;
+    }
+}
+
 void iniciaListaMusicas (ListaMusicas *lm){
     for(int i = 0; i < MAX; i++){
         lm[i].id = i+1;
@@ -155,6 +169,8 @@ void shellSort(ListaMusicas *vet, int tam){
 
 void gerarListaTop3 (Lista **l, ListaMusicas *lm, Lista **gerar){
     Lista *p, *novo;
+    LimpaLista(gerar);
+    
     for(p = (*l); p!=NULL; p = p->prox){
         if (p->info.musicas[0] == lm[0].id || p->info.musicas[0] == lm[1].id || p->info.musicas[0] == lm[2].id){
             
@@ -206,7 +222,6 @@ void main(){
 
         digite();
         scanf("%d", &opcao);
-        limpa();
 
         switch (opcao){
         case 1:
@@ -253,7 +268,7 @@ void main(){
                     }
                 }
             }
-            limpa();
+
             break;
         
         case 2:
@@ -266,7 +281,7 @@ void main(){
             
             digite();
             scanf("%d", &opcao2);
-            limpa();
+
 
             switch (opcao2){
             case 1:
@@ -301,7 +316,7 @@ void main(){
             
             digite();
             scanf("%d", &opcao2);
-            limpa();
+
 
             switch (opcao2){
                 case 1:
@@ -341,7 +356,7 @@ void main(){
             
             digite();
             scanf("%d", &opcao2);
-            limpa();
+
             
             switch (opcao2){
                 case 1:
